@@ -25,6 +25,8 @@
 /* Begin PBXFileReference section */
 		74D22BED22678E42007080B1 /* Homework3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Homework3; sourceTree = BUILT_PRODUCTS_DIR; };
 		74D22BF022678E42007080B1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		74D22BF7226792B2007080B1 /* plist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plist.txt; sourceTree = "<group>"; };
+		74D22BF822679452007080B1 /* ptrace.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ptrace.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,8 @@
 		74D22BEF22678E42007080B1 /* Homework3 */ = {
 			isa = PBXGroup;
 			children = (
+				74D22BF7226792B2007080B1 /* plist.txt */,
+				74D22BF822679452007080B1 /* ptrace.txt */,
 				74D22BF022678E42007080B1 /* main.cpp */,
 			);
 			path = Homework3;
