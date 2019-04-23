@@ -14,15 +14,46 @@
 #include <algorithm>
 using namespace std;
 
+ifstream a("ptrace.txt");
 struct pageTable {
     
 };
+int FIFO(int p){
+	string word;
+	int temp=0;
+	int pageVar=(512/10)/p;
+	int fifoCount=0;
+	int memPlace;
+	bool flag=false;
+    vector<int> list[10];
+    while(a >> word){
+        if(flag == false) {
+            temp = stoi(word);
+            flag = true;
+        } else {
+            memPlace = stoi(word);
+            memPlace = memPlace/p;
+            if (find(list[temp].begin(), list[temp].end(), memPlace) == list[temp].end()) {
+                fifoCount++;
+                list[temp].insert(list[temp].begin(),memPlace);
+                if(list[temp].size() > pageVar)
+                    list[temp].pop_back();
+            
+            }
+         
+            flag = false;
+        }
+    }
+	return fifoCount;
+
+}
+
 
 int main() {
     //Declare the two inputs from the files, and read the files into the data
     int plist[10];
     ifstream f("plist.txt");
-    ifstream a("ptrace.txt");
+
     string word;
     int count = 0;
     int temp = 0;
@@ -36,58 +67,29 @@ int main() {
             count++;
         }
     }
-    
-    
-    
     count = 0;
     //Go through the ptrace for the FIFO
     cout << "--------------------------------------------------" << endl;
     cout << "Going throug to find how many page faults for FIFO" << endl;
-    int memPlace;
-    vector<int> list[10];
-    while(a >> word){
-        if(flag == false) {
-            temp = stoi(word);
-            flag = true;
-        } else {
-            memPlace = stoi(word);
-            memPlace = memPlace/4;
-            if (find(list[temp].begin(), list[temp].end(), memPlace) == list[temp].end()) {
-                count++;
-                list[temp].insert(list[temp].begin(),memPlace);
-                if(list[temp].size() > 12)
-                    list[temp].pop_back();
-            
-            }
-         
-            flag = false;
-        }
-    }
-    
+    int memPlace2;
+    count=FIFO(4);
     a.close();
     cout << "For size 4: " << count << endl;
     a.open("ptrace.txt");
-    count = 0;
-    vector<int> dist[10];
-    while(a >> word){
-        if(flag == false) {
-            temp = stoi(word);
-            flag = true;
-        } else {
-            memPlace = stoi(word);
-            memPlace = memPlace/8;
-            if (find(dist[temp].begin(), dist[temp].end(), memPlace) == dist[temp].end()) {
-                count++;
-                dist[temp].insert(dist[temp].begin(),memPlace);
-                if(dist[temp].size() > 6)
-                    dist[temp].pop_back();
-                
-            }
-            flag = false;
-        }
-    }
-    
+    count=FIFO(8);
     cout << "For size 8: " << count << endl;
+    a.close();
+    a.open("ptrace.txt");
+    count=FIFO(16);
+    cout << "For size 16: " << count << endl;
+    a.close();
+    a.open("ptrace.txt");
+    count=FIFO(1);
+    cout << "For size 1: " << count << endl;
+    a.close();
+    a.open("ptrace.txt");
+    count=FIFO(2);
+    cout << "For size 2: " << count << endl;
     a.close();
     return 0;
 }
