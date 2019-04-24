@@ -21,7 +21,6 @@ int plist[10];
 int Clock(int p){
     string word;
     int temp=0;
-    int tvar = 0;
     int pageVar=(512/10)/p;
     int fifoCount=0;
     int memPlace;
@@ -36,23 +35,20 @@ int Clock(int p){
         } else {
             memPlace = stoi(word);
             memPlace = memPlace/p;
-            if (find(list[temp].begin(), list[temp].end(),memPlace) == list[temp].end() && find(list[temp].begin(), list[temp].end(),(memPlace + plist[temp]/p)) == list[temp].end()) {
+            if (find(list[temp].begin(), list[temp].end(),memPlace) == list[temp].end() && find(list[temp].begin(), list[temp].end(),(memPlace + plist[temp] + 1)) == list[temp].end()) {
                 fifoCount++;
                 while (testing == true) {
                     if(list[temp].size() <= pageVar){
-                        list[temp].push_back(memPlace + plist[temp]/p);
+                        list[temp].push_back(memPlace + plist[temp] + 1);
                         testing = false;
                     } else {
                         if(list[temp].front() > plist[temp]){
                             a1 = list[temp].front();
                             list[temp].erase(list[temp].begin());
-                            list[temp].push_back(a1 - (plist[temp]/p));
-                            tvar++;
-                            if (tvar < 10)
-                                cout << a1 << ' ' << tvar << ' ';
+                            list[temp].push_back(a1 - (plist[temp] + 1));
                         } else {
                             list[temp].erase(list[temp].begin());
-                            list[temp].push_back(memPlace + plist[temp]/p);
+                            list[temp].push_back(memPlace + plist[temp] + 1);
                             testing = false;
                         }
                     }
