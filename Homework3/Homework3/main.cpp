@@ -154,44 +154,77 @@ int LRU(int p){
 }
 
 
+
 //Not working yet
 int FIFOPload(int p){
     string word;
+    int word2[10];
+    int size=0;
+    //int size2=0;
+    int counter=0;
     int temp=0;
     int pageVar=(512/10)/p;
     int fifoCount=0;
     int memPlace;
     bool searching = false;
     bool flag=false;
+    bool checker=false;
     vector<int> list[10];
     while(a >> word){
-        if(flag == false) {
-            temp = stoi(word);
-            flag = true;
-        } else {
-            memPlace = stoi(word);
-            memPlace = memPlace/p;
-            if (find(list[temp].begin(), list[temp].end(), memPlace) == list[temp].end()) {
-                fifoCount++;
-                list[temp].insert(list[temp].begin(),memPlace);
-                if(list[temp].size() > pageVar)
-                    list[temp].pop_back();
-                
+        printf("stoi(word)=%i\n",stoi(word) );
+        checker=false;
+        for(int i=0;i<counter;i++){
+            if(stoi(word)==word2[i]){
+                checker=true;
             }
-            
-            flag = false;
+        }
+        if (checker==false){
+            word2[size]=stoi(word);
+            printf("The first word is %i\n",word2[0] );
+            size++;
+        }
+        counter++;
+        if(counter==10){
+        
+            for(int j=0; j<size;j++){
+                printf("it gets in here\n");
+                printf("%i\n",word2[size-1] );
+                if(flag == false) {
+                    printf("seg fault not in if\n");
+                    temp = word2[j];
+                    flag = true;
+                } else {
+                    printf("seg fault not in else\n");
+                    memPlace = word2[j];
+                    memPlace = memPlace/p;
+                    printf("memPlace is %i and temp is %i\n",memPlace,temp);
+                    if (find(list[temp].begin(), list[temp].end(), memPlace) == list[temp].end()) {
+                        fifoCount++;
+                        //printf("seg fault before 2nd if\n");
+                        list[temp].insert(list[temp].begin(),memPlace);
+                        //printf("seg fault in 2nd if\n");
+                        if(list[temp].size() > pageVar)
+                            list[temp].pop_back();
+                
+                    }
+                
+                    flag = false;
+                }
+            }
+            counter=0;
+            size=0;
         }
     }
     return fifoCount;
 }
 
 int FIFO(int p){
-	string word;
-	int temp=0;
-	int pageVar=(512/10)/p;
-	int fifoCount=0;
-	int memPlace;
-	bool flag=false;
+    string word;
+    int temp=0;
+    int pageVar=(512/10)/p;
+    int fifoCount=0;
+    int memPlace;
+    bool flag=false;
     vector<int> list[10];
     while(a >> word){
         if(flag == false) {
@@ -211,7 +244,7 @@ int FIFO(int p){
             flag = false;
         }
     }
-	return fifoCount;
+    return fifoCount;
 
 }
 
@@ -279,25 +312,25 @@ int main() {
     cout << "For size 16: " << count << endl;
     a.close(); */
     cout << "---------------------------------------------------" << endl;
-    cout << "Going throug to find how many page faults for Clock" << endl;
+    cout << "Going throug to find how many page faults for FIFOPload" << endl;
     a.open("ptrace.txt");
-    count = Clock(1);
+    count = FIFOPload(1);
     cout << "For size 1: " << count << endl;
     a.close();
     a.open("ptrace.txt");
-    count = Clock(2);
+    count = FIFOPload(2);
     cout << "For size 2: " << count << endl;
     a.close();
     a.open("ptrace.txt");
-    count = Clock(4);
+    count = FIFOPload(4);
     cout << "For size 4: " << count << endl;
     a.close();
     a.open("ptrace.txt");
-    count = Clock(8);
+    count = FIFOPload(8);
     cout << "For size 8: " << count << endl;
     a.close();
     a.open("ptrace.txt");
-    count = Clock(16);
+    count = FIFOPload(16);
     cout << "For size 16: " << count << endl;
     a.close();
 
