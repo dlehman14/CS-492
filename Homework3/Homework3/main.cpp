@@ -17,7 +17,7 @@ using namespace std;
 ifstream a("ptrace.txt");
 
 int plist[10];
-
+/*
 int Clock(int p){
     string word;
     int temp=0;
@@ -49,6 +49,67 @@ int Clock(int p){
                         } else {
                             list[temp].erase(list[temp].begin());
                             list[temp].push_back(memPlace + plist[temp] + 1);
+                            testing = false;
+                        }
+                    }
+                }
+            }
+            flag = false;
+            testing = true;
+        }
+    }
+    return fifoCount;
+}
+*/
+
+struct clockData{
+    int memData;
+    bool valueBit;
+};
+
+struct find_clockData{
+    int memData;
+    find_clockData(int memData) : memData(memData) {}
+    bool operator () ( const clockData& m ) const{
+        return m.memData == memData;
+    }
+};
+
+int Clock(int p){
+    string word;
+    int temp=0;
+    int pageVar=(512/10)/p;
+    int fifoCount=0;
+    int memPlace;
+    bool flag=false;
+    clockData a1;
+    bool testing = true;
+    vector<clockData> list[10];
+    while(a >> word){
+        if(flag == false) {
+            temp = stoi(word);
+            flag = true;
+        } else {
+            memPlace = stoi(word);
+            memPlace = memPlace/p;
+            clockData t;
+            t.memData = memPlace;
+            t.valueBit = true;
+            if (find_if(list[temp].begin(), list[temp].end(),find_clockData(memPlace)) == list[temp].end()) {
+                fifoCount++;
+                while (testing == true) {
+                    if(list[temp].size() <= pageVar){
+                        list[temp].push_back(t);
+                        testing = false;
+                    } else {
+                        if(list[temp].front().valueBit == true){
+                            a1 = list[temp].front();
+                            list[temp].erase(list[temp].begin());
+                            a1.valueBit = false;
+                            list[temp].push_back(a1);
+                        } else {
+                            list[temp].erase(list[temp].begin());
+                            list[temp].push_back(t);
                             testing = false;
                         }
                     }
