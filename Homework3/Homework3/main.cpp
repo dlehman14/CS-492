@@ -121,7 +121,53 @@ int Clock(int p){
     }
     return fifoCount;
 }
-
+//Not Implemented yet for prepaging
+int Clock2(int p){
+  string word;
+    int temp=0;
+    int pageVar=(512/10)/p;
+    int fifoCount=0;
+    int memPlace;
+    bool flag=false;
+    clockData a1;
+    bool testing = true;
+    vector<clockData> list[10];
+    while(a >> word){
+        if(flag == false) {
+            temp = stoi(word);
+            flag = true;
+        } else {
+            memPlace = stoi(word);
+            memPlace = memPlace/p;
+            clockData t;
+            t.memData = memPlace;
+            t.valueBit = true;
+            if (find_if(list[temp].begin(), list[temp].end(),find_clockData(memPlace)) == list[temp].end()) {
+                fifoCount++;
+                while (testing == true) {
+                    if(list[temp].size() <= pageVar){
+                        list[temp].push_back(t);
+                        testing = false;
+                    } else {
+                        if(list[temp].front().valueBit == true){
+                            a1 = list[temp].front();
+                            list[temp].erase(list[temp].begin());
+                            a1.valueBit = false;
+                            list[temp].push_back(a1);
+                        } else {
+                            list[temp].erase(list[temp].begin());
+                            list[temp].push_back(t);
+                            testing = false;
+                        }
+                    }
+                }
+            }
+            flag = false;
+            testing = true;
+        }
+    }
+    return fifoCount;
+}
 int LRU(int p){
     string word;
     int temp=0;
@@ -152,7 +198,37 @@ int LRU(int p){
     }
     return fifoCount;
 }
-
+//not yet implemented for prepaging
+int LRU2(int p){
+    string word;
+    int temp=0;
+    int pageVar=(512/10)/p;
+    int fifoCount=0;
+    int memPlace;
+    bool flag=false;
+    vector<int> list[10];
+    while(a >> word){
+        if(flag == false) {
+            temp = stoi(word);
+            flag = true;
+        } else {
+            memPlace = stoi(word);
+            memPlace = memPlace/p;
+            if (find(list[temp].begin(), list[temp].end(), memPlace) == list[temp].end()) {
+                list[temp].insert(list[temp].begin(),memPlace);
+                fifoCount++;
+                if(list[temp].size() > pageVar){
+                    list[temp].pop_back();
+                }
+            } else {
+                list[temp].erase(find(list[temp].begin(), list[temp].end(), memPlace));
+                list[temp].insert(list[temp].begin(),memPlace);
+            }
+            flag = false;
+        }
+    }
+    return fifoCount;
+}
 
 
 //Not working yet
@@ -300,7 +376,11 @@ int FIFO(int p){
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
+    if(argc!=6){
+        cout << "Error, must have 6 arguments." << endl;
+        return 0;
+    }
     //Declare the two inputs from the files, and read the files into the data
     ifstream f("plist.txt");
 
@@ -316,6 +396,54 @@ int main() {
             count++;
         }
     }
+    count=0;
+    int pages=stoi(argv[3]);
+    string algo=argv[4];
+    string load=argv[5];
+    transform(algo.begin(), algo.end(), algo.begin(), ::tolower);
+    if(load.compare("-")==0){
+        cout << "No prepaging: " << endl;
+        if(algo.compare("fifo")==0){
+            count=FIFO(pages);
+            a.close();
+            cout << "FIFO for size "<< pages <<": " << count << endl;
+            return 0;
+        }
+        if(algo.compare("lru")==0){
+            count=LRU(pages);
+            a.close();
+            cout << "LRU for size "<< pages <<": " << count << endl;
+            return 0;
+        }
+        if(algo.compare("clock")==0){
+            count=Clock(pages);
+            a.close();
+            cout << "Clock for size "<< pages <<": " << count << endl;
+            return 0;
+        }
+    }
+    if(load.compare("+")==0){
+        cout << "Prepaging:" << endl;
+        if(algo.compare("fifo")==0){
+            count=FIFO2(pages);
+            a.close();
+            cout << "For size "<< pages <<": " << count << endl;
+            return 0;
+        }
+        if(algo.compare("lru")==0){
+            count=LRU2(pages);
+            a.close();
+            cout << "For size "<< pages <<": " << count << endl;
+            return 0;
+        }
+        if(algo.compare("clock")==0){
+            count=Clock2(pages);
+            a.close();
+            cout << "For size "<< pages <<": " << count << endl;
+            return 0;
+        }
+    }
+    /*
     count = 0;
     //Go through the ptrace for the FIFO
     cout << "--------------------------------------------------" << endl;
@@ -361,9 +489,10 @@ int main() {
     a.open("ptrace.txt");
     count = LRU(16);
     cout << "For size 16: " << count << endl;
-    a.close(); */
+    a.close(); 
     cout << "---------------------------------------------------" << endl;
     cout << "Going throug to find how many page faults for FIFOPload" << endl;
-
+*/
+    cout << "Error: Invalid arguments given" << endl;
     return 0;
 }
