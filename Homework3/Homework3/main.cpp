@@ -218,6 +218,57 @@ int FIFOPload(int p){
     return fifoCount;
 }
 
+int FIFO2(int p){
+    string word;
+    int temp=0;
+    int pageVar=(512/10)/p;
+    int fifoCount=0;
+    int memPlace;
+    bool flag=false;
+    int counter1 = 0;
+    int counter2 = 0;
+    clockData t;
+    vector<int> list[10];
+    vector<int> list2[10];
+    while(a >> word){
+        if(flag == false) {
+            temp = stoi(word);
+            flag = true;
+        } else {
+            memPlace = stoi(word);
+            memPlace = memPlace/p;
+            counter1++;
+            if (find(list2[temp].begin(), list2[temp].end(), memPlace) == list2[temp].end()){
+                list2[temp].push_back(memPlace);
+            }
+            if(counter1 == 10){
+                for(int i = 0; i < 10; i++){
+                    while(!list2[i].empty()){
+                        if (find(list[i].begin(), list[i].end(), list2[i].front()) == list[i].end()) {
+                            fifoCount++;
+                            list[i].insert(list[i].begin(),list2[i].front());
+                            if(list[i].size() > pageVar)
+                                list[i].pop_back();
+                        }
+                        list2[i].erase(list2[i].begin());
+                    }
+                }
+            }
+         /*   if (find_if(list[temp].begin(), list[temp].end(),find_clockData(memPlace)) == list[temp].end()) {
+                fifoCount++;
+                list[temp].insert(list[temp].begin(),memPlace);
+                if(list[temp].size() > pageVar)
+                    list[temp].pop_back();
+            }
+            */
+            flag = false;
+        }
+    }
+    return fifoCount;
+    
+}
+
+
 int FIFO(int p){
     string word;
     int temp=0;
@@ -270,19 +321,19 @@ int main() {
     cout << "--------------------------------------------------" << endl;
     cout << "Going throug to find how many page faults for FIFO" << endl;
     int memPlace2;
-    count=FIFO(1);
+    count=FIFO2(1);
     a.close();
- /*   cout << "For size 1: " << count << endl;
+    cout << "For size 1: " << count << endl;
     a.open("ptrace.txt");
-    count=FIFO(2);
+    count=FIFO2(2);
     cout << "For size 2: " << count << endl;
     a.close();
     a.open("ptrace.txt");
-    count=FIFO(4);
+    count=FIFO2(4);
     cout << "For size 4: " << count << endl;
     a.close();
     a.open("ptrace.txt");
-    count=FIFO(8);
+    count=FIFO2(8);
     cout << "For size 8: " << count << endl;
     a.close();
     a.open("ptrace.txt");
@@ -291,7 +342,7 @@ int main() {
     a.close();
     cout << "---------------------------------------------------" << endl;
     cout << "Going throug to find how many page faults for LRU" << endl;
-    a.open("ptrace.txt");
+/*    a.open("ptrace.txt");
     count = LRU(1);
     cout << "For size 1: " << count << endl;
     a.close();
@@ -313,26 +364,6 @@ int main() {
     a.close(); */
     cout << "---------------------------------------------------" << endl;
     cout << "Going throug to find how many page faults for FIFOPload" << endl;
-    a.open("ptrace.txt");
-    count = FIFOPload(1);
-    cout << "For size 1: " << count << endl;
-    a.close();
-    a.open("ptrace.txt");
-    count = FIFOPload(2);
-    cout << "For size 2: " << count << endl;
-    a.close();
-    a.open("ptrace.txt");
-    count = FIFOPload(4);
-    cout << "For size 4: " << count << endl;
-    a.close();
-    a.open("ptrace.txt");
-    count = FIFOPload(8);
-    cout << "For size 8: " << count << endl;
-    a.close();
-    a.open("ptrace.txt");
-    count = FIFOPload(16);
-    cout << "For size 16: " << count << endl;
-    a.close();
 
     return 0;
 }
