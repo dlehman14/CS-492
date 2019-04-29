@@ -1,25 +1,29 @@
 #ifndef _Tree_HPP_
 #define _Tree_HPP_
 
+#include <list>
+#include <time.h>
+
 #include "GNode.hpp"
 #include "LDisk.hpp"
+using namespace std;
 
 class Tree{
     public:
-        Tree(int bs,int b);
+        Tree(int bs,int b) : blockSize(bs), numBlocks(b) {}
         //FOR YOUR DIRECTORIES AND FILES
-        void addNode(int size,std::string name);
+        void addNode(int size,string name);
         //FOR YOUR DEBUGGING
         void prePrint();
         // METHODS FOR THE SHELL
-        void cd(std::string name);
+        void cd(string name);
         void cdOut();
         void ls();
-        void mkdir(std::string name);
-        void create(std::string name);
-        void append(std::string name, int bytes);
-        void remove(std::string name,int bytes);
-        void deleteNode(std::string name);
+        void mkdir(string name);
+        void create(string name);
+        void append(string name, int bytes);
+        void remove(string name,int bytes);
+        void deleteNode(string name);
         void dir();
         void printDisk();
         void printFiles();
@@ -33,8 +37,8 @@ class Tree{
         int numBlocks;
         int blockSize;
         void pFile(GNode * dir);
-        int lookUp(std::string name);
-        void step(std::string name);
+        int lookUp(string name);
+        void step(string name);
         void deleteHelper(GNode * tmp);
         void deleteFile(GNode * f);
         int time;

@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <linkedlist>
 
 #include "GNode.hpp"
 #include "Tree.hpp"
@@ -71,10 +72,10 @@ int main(int argc, char* argv[]){
     }
 
     int numBlocks= diskSize/blockSize;
-    
+
     //CREATE THE DIRECTORY
     Tree directory= Tree(blockSize,numBlocks);
-    
+
     //READ THE DIRECTORIES
     while(getline(directoryStream, line)){
         //ADD EACH DIRECTORY AS A NODE
@@ -143,7 +144,7 @@ int main(int argc, char* argv[]){
             }
             else{
                 cout << "Need more arguments" <<endl;
-            }   
+            }
         }
 
         else if(!command.compare("create")){
@@ -152,7 +153,7 @@ int main(int argc, char* argv[]){
             }
             else{
                 cout << "Need more arguments" <<endl;
-            }   
+            }
         }
 
         else if(!command.compare("append")){
@@ -161,7 +162,7 @@ int main(int argc, char* argv[]){
             }
             else{
                 cout << "Need more arguments" <<endl;
-            }   
+            }
         }
 
         else if(!command.compare("remove")){
@@ -170,11 +171,11 @@ int main(int argc, char* argv[]){
             }
             else{
                 cout << "Need more arguments" <<endl;
-            }   
+            }
         }
 
         else if(!command.compare("delete")){
-            directory.deleteNode(arg1); 
+            directory.deleteNode(arg1);
         }
 
         else if(!command.compare("exit")){

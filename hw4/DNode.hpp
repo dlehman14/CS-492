@@ -8,12 +8,14 @@ struct DNode{
         start=s;
         end=l;
         next=NULL;
+        prev = NULL;
         usedBit=u;
     }
-    int usedBit;  
+    int usedBit;
     int start;
     int end;
-    DNode* next; 
+    DNode* next;
+    DNode* prev;
 };
 
 #endif
