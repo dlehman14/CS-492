@@ -80,8 +80,7 @@ class Tree{
         void create(string name){
           updateTime();
           //create the file
-          LDisk * tempDisk = new LDisk(diskSize/blockSize);
-          LFile * tempFile = new LFile(0,blockSize,tempDisk);
+          LFile * tempFile = new LFile(0,blockSize,disk);
           GNode * tempNode = new GNode(name, time, 0, currentDir);
           //push it back
           currentDir -> children.push_back(tempNode);
@@ -103,6 +102,7 @@ class Tree{
           }
           *it -> timeStamp = time;
           *it -> file -> append(bytes);
+          disk = *it -> file -> disk;
         }
 
 
@@ -121,6 +121,7 @@ class Tree{
           }
           *it -> timeStamp = time;
           *it -> file -> remove(bytes);
+          disk = *it -> file -> disk;
         }
 
 
@@ -138,11 +139,28 @@ class Tree{
             deleteFile(*it);
           }
         }
-        void dir();
-        void printDisk();
-        void printFiles();
+        void dir(){
+          pFile(currentDir);
+        }
+        void printDisk(){
+          disk -> print();
+        }
+        void printFiles(){
+          for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
+            if(*it -> file != NULL){
+              *it -> file -> print();
+            }
+          }
+        }
+
         // CLEANUP
-        ~Tree();
+        ~Tree(){
+          deleteFullDir(root);
+          delete root;
+          root = NULL;
+          disk = NULL;
+          currentDir = NULL;
+        }
     private:
         GNode * root;
         LDisk * disk;
@@ -151,7 +169,12 @@ class Tree{
         int numBlocks;
         int blockSize;
         int diskSize;
-        void pFile(GNode * dir);
+        void pFile(GNode * dir){
+          cout << dir -> name << '\t';
+          for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
+            pfile(*it);
+          }
+        }
         int lookUp(string name){
           bool flag = true;
           list<GNode*>::iterator it = currentDir -> children.begin();
@@ -168,7 +191,6 @@ class Tree{
           time_t tempTime = time(NULL)
           time = (int)(time(&tempTime));
         }
-        void step(string name);
         void deleteHelper(GNode * tmp){
           if(tmp -> children.empty()){
             currentDir -> children -> remove(tmp);
@@ -178,9 +200,22 @@ class Tree{
           }
         }
         void deleteFile(GNode * f){
-
+          currentDir -> children -> remove(f);
         }
         int time;
+        void deleteFullDir(GNode * dir){
+          for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
+            if(*it -> file != NULL){
+              delete *it;
+            } else {
+              if(*it -> children.empty()){
+                delete *it;
+              } else {
+                deleteFullDir(*it);
+              }
+            }
+          }
+        }
 };
 
 #endif
