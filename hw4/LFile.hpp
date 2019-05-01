@@ -20,7 +20,7 @@ class LFile
             disk = nDisk;
           }
 
-          
+
           while(blocksLeft > 0){
             if(blocksLeft > disk -> getBlocksLeft()){
               if (firstPass == true){
@@ -187,6 +187,10 @@ class LFile
             temp -> disk -> deleteDisk();
             delete temp;
           }
+        }
+
+        LDisk* getDisk(){
+          return disk;
         }
 
     private:
