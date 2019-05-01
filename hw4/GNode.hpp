@@ -5,7 +5,7 @@
 #include "LFile.hpp"
 
 struct GNode{
-    GNode(std::string nm,int ts, int sz, GNode* pt){
+    GNode(std::string nm, int ts, int sz, GNode* pt){
         name=nm;
         size=sz;
         parent=pt;
@@ -22,7 +22,7 @@ struct GNode{
     }
 
     LFile* file;
-    std::string name; 
+    std::string name;
     int timeStamp;
     int size;
     std::list <GNode*> children;

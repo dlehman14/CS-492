@@ -10,7 +10,18 @@ using namespace std;
 
 class Tree{
     public:
-        Tree(int bs,int b) : blockSize(bs), numBlocks(b) {}
+
+        //initialize the tree
+        Tree(int bs,int b){
+          //set up the initial variables
+          blockSize = bs;
+          numBlocks = b;
+          time_t tempTime = time(NULL)
+          int toTime = (int)(time(&tempTime));
+          root = new GNode(" ",toTime,16,NULL);
+          disk = new LDisk()
+          currentDir = root;
+        }
         //FOR YOUR DIRECTORIES AND FILES
         void addNode(int size,string name);
         //FOR YOUR DEBUGGING

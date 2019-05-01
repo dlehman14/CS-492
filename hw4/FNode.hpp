@@ -4,18 +4,23 @@
 
 struct FNode{
     int blockAddress;
-    FNode* next;    
+    FNode* next;
+    FNode * prev;
+    LDisk * disk;
 
-    FNode()
+    FNode(LDisk * disk)
     {
         blockAddress = -1;
         next = NULL;
+        disk = disk;
     }
 
-    FNode(int m, FNode* p, FNode* n)
+    FNode(int m, FNode* n, FNode* p, LDisk * d)
     {
         blockAddress = m;
         next = n;
+        disk = d;
+        prev = p;
     }
 };
 
