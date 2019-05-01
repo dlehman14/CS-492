@@ -2,7 +2,11 @@
 #define _Tree_HPP_
 
 #include <list>
+#include <algorithm>
+#include <iostream>
+#include <iterator>
 #include <time.h>
+#include <unistd.h>
 
 #include "GNode.hpp"
 #include "LDisk.hpp"
@@ -65,8 +69,16 @@ class Tree{
 
         void ls(){
           for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
-            cout << (*it) -> name << ' ';
+            (*it) -> printName();
+            usleep(1);
           }
+          cout << endl;
+          /*
+          for(auto v: (currentDir -> children)){
+            cout << v -> name;
+            cout << ' ';
+          }
+          */
         }
 
 
@@ -82,6 +94,7 @@ class Tree{
           //create the file
           LFile * tempFile = new LFile(0,blockSize,disk);
           GNode * tempNode = new GNode(name, tim, 0, currentDir);
+          tempNode -> file = tempFile;
           //push it back
           currentDir -> children.push_back(tempNode);
         }

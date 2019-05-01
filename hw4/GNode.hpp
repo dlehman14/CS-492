@@ -21,6 +21,10 @@ struct GNode{
         }
     }
 
+    void printName(){
+      cout << name << ' ';
+    }
+
     LFile* file;
     std::string name;
     int timeStamp;

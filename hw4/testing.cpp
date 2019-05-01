@@ -51,6 +51,7 @@ cout <<"ls should print testyboi testDir" << endl;
 test.ls();
 cout << "testing if deletion of a nonempty dir is allowed" << endl;
 //test.deleteNode(testDir);
+/*
 cout << "testing the dir function" << endl;
 test.dir();
 cout << "testing the printDisk function" << endl;
@@ -64,7 +65,7 @@ cout << "testing the remove function. testyboi should have 2 bytes now." << endl
 test.remove("testyboi",30);
 
 
-
+*/
 
 
 
