@@ -32,8 +32,11 @@ int main() {
   testFile -> remove(2048);
   testFile -> print();
 */
-  time_t myTime = time(NULL);
-  int toTime = (int)(time(&myTime));
-  cout << time(&myTime) << endl;
-  cout << toTime << endl;
+  
+
+
+
+
+
+
 }

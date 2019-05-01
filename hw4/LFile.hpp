@@ -19,6 +19,8 @@ class LFile
             LDisk * nDisk = new LDisk(diskSize);
             disk = nDisk;
           }
+
+          
           while(blocksLeft > 0){
             if(blocksLeft > disk -> getBlocksLeft()){
               if (firstPass == true){
