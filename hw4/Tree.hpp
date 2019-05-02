@@ -245,6 +245,7 @@ class Tree{
           {
             if(GNode -> file != NULL){
               cout << "For " << GNode -> name << endl;
+              //cout << "Total size: " << GNode -> file -> getSize() << " Bytes" << endl;
               GNode -> file -> print();
             }
           }

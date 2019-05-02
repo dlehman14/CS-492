@@ -199,7 +199,7 @@ class LFile
           FNode * trav = start;
           while(trav != NULL){
             FNode * temp = trav;
-            trav = trav -> prev;
+            trav = trav -> next;
             delete temp;
           }
           start = NULL;
