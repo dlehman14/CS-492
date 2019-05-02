@@ -109,7 +109,6 @@ int main(int argc, char* argv[]){
             ctr++;
         }
         // ADD EACH TO THE DIRECTORY
-        printf("size is:%i for %s\n",size,name  );
         name.erase(0,2);
         directory.addNode(size,name);
     }

@@ -229,6 +229,7 @@ class Tree{
         }
 
         void dir(){
+        cout << root -> name << endl;
           pFile(currentDir);
           cout << endl;
         }
@@ -277,14 +278,21 @@ class Tree{
         int blockSize;
         int diskSize;
         void pFile(GNode * dir){
-          cout << dir -> name << '\t';
           if(dir -> children.empty())
             return;
+        list <GNode*> temp;
           for(const auto& GNode : dir->children)
           {
-            pFile(GNode);
+            cout << GNode -> name << '\t';
+            if(GNode->file==NULL)
+                temp.push_back(GNode);
           }
-        }
+          cout << endl;
+          for(const auto& GNod : temp){
+            pFile(GNod);
+          }
+      }
+
         int lookUp(string name){
           bool flag = true;
           list<GNode*>::iterator it = currentDir -> children.begin();
