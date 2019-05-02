@@ -1,0 +1,15 @@
+10696049115416423      0 -rw-rw-rw-   1 tkautz12 tkautz12      293 Apr 29 23:12 ./DNode.hpp
+ 1407374883702756      0 -rw-rw-rw-   1 tkautz12 tkautz12      407 May  1 14:46 ./FNode.hpp
+ 1407374883702759      1 -rw-rw-rw-   1 tkautz12 tkautz12      537 May  1 19:01 ./GNode.hpp
+ 1125899906992109      4 -rw-rw-rw-   1 tkautz12 tkautz12     4277 May  1 14:46 ./LDisk.hpp
+71213169107886822      4 -rw-rw-rw-   1 tkautz12 tkautz12     6752 May  2 13:59 ./LFile.hpp
+ 2814749767928365      4 -rw-rw-rw-   1 tkautz12 tkautz12      608 Apr 29 14:34 ./Makefile
+ 2251799814507055      4 -rw-rw-rw-   1 tkautz12 tkautz12     1270 Apr 29 14:34 ./README.md
+30962247438263750      4 -rw-rw-rw-   1 tkautz12 tkautz12     8444 May  2 13:59 ./Tree.hpp
+ 7599824371337208     24 -rwxrwxrwx   1 tkautz12 tkautz12    46320 May  2 14:03 ./a.out
+10133099161728589      0 -rw-rw-rw-   1 tkautz12 tkautz12       23 May  2 14:09 ./dir_list.txt
+52635820645036584      4 -rw-rw-rw-   1 tkautz12 tkautz12      512 May  2 14:09 ./file_list.txt
+ 2251799813836784      4 -rw-rw-rw-   1 tkautz12 tkautz12     4573 May  2 13:59 ./main.cpp
+12666373952391842    116 -rw-rw-rw-   1 tkautz12 tkautz12   236228 Apr 29 23:12 ./main.o
+ 8725724278852155      0 -rwxrwxrwx   1 tkautz12 tkautz12       70 Apr 29 14:34 ./test.sh
+63613344736684028      4 -rw-rw-rw-   1 tkautz12 tkautz12     2024 May  2 13:59 ./testing.cpp

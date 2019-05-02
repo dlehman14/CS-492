@@ -323,6 +323,10 @@ class Tree{
         int tim;
         //Deconstructor
         void deleteFullDir(GNode * dir){
+            if(dir->children.empty()){
+                delete dir;
+                return;
+            }
           for(const auto& GNode : currentDir->children)
           {
             if(GNode -> file != NULL)
@@ -331,7 +335,7 @@ class Tree{
               if(GNode -> children.empty())
                 delete GNode;
               else {
-                deleteFullDir(GNode);
+                //deleteFullDir(GNode);
                 delete GNode;
               }
             }

@@ -1,0 +1,6 @@
+./
+./test
+./test/test2
+./testy
+./testy/anotherTest
+./testy/testing
