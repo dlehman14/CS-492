@@ -40,7 +40,7 @@ test.create("testyboi");
 test.mkdir("testDir");
 cout <<"testing ls: expected: testyboi testDir" << endl;
 test.ls();
-test.cd("testDir");
+//test.cd("testDir");
 cout << "moved into new dir ls should print nothing"<<endl;
 test.ls();
 test.mkdir("test2");

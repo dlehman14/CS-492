@@ -68,6 +68,11 @@ class Tree{
 
 
         void ls(){
+          for(const auto& GNode : currentDir->children)
+          {
+            std::cout << GNode->name << std::endl;
+          }
+          /*
           for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
             (*it) -> printName();
             usleep(1);
