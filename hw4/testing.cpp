@@ -7,7 +7,6 @@
 using namespace std;
 
 int main() {
-/*
   LDisk testDisk(32);
   cout << testDisk.totalBlocks << endl;
   cout << testDisk.maxBlocks << endl;
@@ -21,11 +20,10 @@ int main() {
   testDisk.print();
   testDisk.update();
   testDisk.print();
-*/
 
-/*
-  LDisk * testDisk = new LDisk(16);
-  LFile * testFile = new LFile(2048, 32, testDisk);
+
+  LDisk * tDisk = new LDisk(16);
+  LFile * testFile = new LFile(2048, 32, tDisk);
   GNode * testNode = new GNode("test",512,32,NULL);
   testFile -> print();
   cout << endl;
@@ -33,7 +31,8 @@ int main() {
   testFile -> print();
   testFile -> remove(2048);
   testFile -> print();
-*/
+
+
 int numBlocks=32;
 int blockSize=16;
 Tree * test = new Tree(blockSize,numBlocks,512);
@@ -46,31 +45,35 @@ test -> mkdir("testDir");
 cout <<"testing ls: expected: testyboi testDir" << endl;
 test -> ls();
 
-//test.cd("testDir");
+test -> cd("testDir");
 cout << "moved into new dir ls should print nothing"<<endl;
 test -> ls();
 test -> mkdir("test2");
 cout << "ls should print: test2" << endl;
 test -> ls();
 test -> cdOut();
+test -> mkdir("test3");
 cout <<"ls should print testyboi testDir" << endl;
 test -> ls();
-delete test;
 cout << "testing if deletion of a nonempty dir is allowed" << endl;
-//test.deleteNode(testDir);
-/*
+test -> deleteNode("testDir");
+test -> deleteNode("test3");
+test -> ls();
 cout << "testing the dir function" << endl;
-test.dir();
+test -> dir();
 cout << "testing the printDisk function" << endl;
-test.printDisk();
+test -> printDisk();
 cout << "testing the printFiles function" << endl;
-test.printFiles();
+test -> ls();
+test -> printFiles();
+test -> printDisk();
 cout << "testing the append function. testyboi should have 32 bytes" << endl;
-test.append("testyboi",16);
-test.printFiles();
+test -> append("testyboi",16);
+test -> printFiles();
+test -> printDisk();
 cout << "testing the remove function. testyboi should have 2 bytes now." << endl;
-test.remove("testyboi",30);
-*/
+test -> remove("testyboi",30);
+cout << "Hello" << endl;
 
 
 

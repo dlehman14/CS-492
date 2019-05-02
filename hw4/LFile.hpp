@@ -180,12 +180,14 @@ class LFile
         }
 
         ~LFile(){
-          FNode * trav = tail;
+          FNode * trav = start;
           while(trav != NULL){
             FNode * temp = trav;
             trav = trav -> prev;
             delete temp;
           }
+          start = NULL;
+          tail = NULL;
         }
 
         LDisk* getDisk(){

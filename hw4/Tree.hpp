@@ -40,23 +40,15 @@ class Tree{
 
         void cd(string name){
           bool flag = false;
-          //list<GNode*>::iterator it = currentDir -> children.begin();
+          GNode * temp = currentDir;
           for(const auto& GNode : currentDir->children)
           {
+          //  usleep(1);
             if(GNode->name.compare(name)==0)
             {
-                flag=true;
-                if(GNode->file!=NULL){
-                    cout << "cannot change directory to a file" << endl;
-                    return;
-                }
-                else{
-                    temp== currentDir;
-                    currentDir = GNode;
-                    GNode->parent= temp;
-                }
-
-
+              temp = GNode;
+              flag = true;
+              break;
             }
           }
 
@@ -64,6 +56,7 @@ class Tree{
             cout << "cannot change directory, couldn't find directory" << endl;
             return;
           }
+          currentDir = temp;
           return;
           /*
           if(*it == NULL){
@@ -92,8 +85,9 @@ class Tree{
         void ls(){
           for(const auto& GNode : currentDir->children)
           {
-            cout << GNode->name << endl;
+            cout << GNode->name << '\t';
           }
+          cout << endl;
         }
 
 
@@ -116,8 +110,28 @@ class Tree{
 
 
         void append(string name, int bytes){
-          bool flag = true;
           updateTime();
+          bool flag = false;
+          GNode * temp = currentDir;
+          for(const auto& GNode : currentDir->children)
+          {
+            if(GNode->name.compare(name)==0)
+            {
+              temp = GNode;
+              flag = true;
+              break;
+            }
+          }
+
+          if(flag == false){
+            cout << "cannot append, couldn't find file" << endl;
+            return;
+          }
+
+          temp -> timeStamp = tim;
+          temp -> file -> append(bytes);
+          disk = temp -> file -> getDisk();
+          /*
           list<GNode*>::iterator it = currentDir -> children.begin();
           while(it != currentDir -> children.end() && flag == true){
             if((*it) -> name == name)
@@ -131,12 +145,32 @@ class Tree{
           (*it) -> timeStamp = tim;
           (*it) -> file -> append(bytes);
           disk = (*it) -> file -> getDisk();
+          */
         }
 
 
         void remove(string name,int bytes){
-          bool flag = true;
           updateTime();
+          bool flag = false;
+          GNode * temp = currentDir;
+          for(const auto& GNode : currentDir->children)
+          {
+            if(GNode->name.compare(name)==0)
+            {
+              temp = GNode;
+              flag = true;
+              break;
+            }
+          }
+
+          if(flag == false){
+            cout << "cannot remove, couldn't find file" << endl;
+            return;
+          }
+          temp -> timeStamp = tim;
+          temp -> file -> remove(bytes);
+          disk = temp -> file -> getDisk();
+          /*
           list<GNode*>::iterator it = currentDir -> children.begin();
           while(it != currentDir -> children.end() && flag == true){
             if((*it) -> name == name)
@@ -150,36 +184,56 @@ class Tree{
           (*it) -> timeStamp = tim;
           (*it) -> file -> remove(bytes);
           disk = (*it) -> file -> getDisk();
+          */
         }
 
 
         void deleteNode(string name){
           int pos = lookUp(name);
-          list<GNode*>::iterator it = currentDir -> children.begin();
-          if(pos == -1){
-            cout << "could not find node" << endl;
+          bool flag = false;
+          GNode * temp = currentDir;
+          for(const auto& GNode : currentDir->children)
+          {
+            if(GNode->name.compare(name)==0)
+            {
+              temp = GNode;
+              flag = true;
+              break;
+            }
+          }
+
+          if(flag == false){
+            cout << "cannot delete Node, couldn't find Node" << endl;
             return;
           }
-          advance(it,pos);
-          if((*it) -> file == NULL){
-            deleteHelper(*it);
+          if(temp -> file == NULL){
+            deleteHelper(temp);
           } else {
-            deleteFile(*it);
+            deleteFile(temp);
           }
         }
+
         void dir(){
           pFile(currentDir);
+          cout << endl;
         }
+
         void printDisk(){
+          cout << "Printing disk" << endl;
           disk -> print();
         }
+
         void printFiles(){
+          cout << "Printing files for " << currentDir -> name << ": " << endl;
+
           for(const auto& GNode : currentDir->children)
           {
             if(GNode -> file != NULL){
+              cout << "For " << GNode -> name << endl;
               GNode -> file -> print();
             }
           }
+          cout << endl;
           /*
           for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
             if((*it) -> file != NULL){
@@ -208,15 +262,12 @@ class Tree{
         int diskSize;
         void pFile(GNode * dir){
           cout << dir -> name << '\t';
-          for(const auto& GNode : currentDir->children)
+          if(dir -> children.empty())
+            return;
+          for(const auto& GNode : dir->children)
           {
             pFile(GNode);
           }
-          /*
-          for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
-            pFile(*it);
-          }
-          */
         }
         int lookUp(string name){
           bool flag = true;
