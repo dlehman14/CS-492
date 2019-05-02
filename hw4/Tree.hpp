@@ -30,9 +30,18 @@ class Tree{
 
         //FOR YOUR DIRECTORIES AND FILES
         void addNode(int size,string name){
+            /*
           updateTime();
           GNode * newNode = new GNode(name,tim,size,currentDir);
           currentDir -> children.push_back(newNode);
+          */
+            if(size<0){
+                mkdir(name);
+            }
+            else{
+                create(name);
+                append(name,size);
+            }
         }
         //FOR YOUR DEBUGGING
     //    void prePrint()
@@ -56,7 +65,10 @@ class Tree{
             cout << "cannot change directory, couldn't find directory" << endl;
             return;
           }
-          currentDir = temp;
+          if(temp->file==NULL)
+            currentDir = temp;
+          else
+            cout << "cannot change directory to a file"<<endl;
           return;
           /*
           if(*it == NULL){
@@ -92,9 +104,11 @@ class Tree{
 
 
         void mkdir(string name){
+            if(!name.empty()){
           updateTime();
           GNode * temp = new GNode(name,tim,16,currentDir);
           currentDir -> children.push_back(temp);
+        }
         }
 
 
