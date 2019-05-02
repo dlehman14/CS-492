@@ -10,7 +10,11 @@ using namespace std;
 
 class LDisk{
     public:
-        LDisk(int blocks) : maxBlocks(blocks), head(NULL), totalBlocks(0) {}
+        LDisk(int blocks) {
+          maxBlocks = blocks;
+          head = NULL;
+          totalBlocks = 0;
+        }
 
         int insert(int s, int e, int u) { // working
           if(e < s){

@@ -4,6 +4,8 @@
 #include "FNode.hpp"
 #include "LDisk.hpp"
 #include <list>
+#include <time.h>
+#include <unistd.h>
 using namespace std;
 
 class LFile
@@ -20,6 +22,12 @@ class LFile
             disk = nDisk;
           }
 
+          if(blocksLeft == 0){
+            FNode * temp = new FNode(disk -> totalBlocks,NULL, NULL, disk);
+            start = temp;
+            tail = temp;
+            disk -> insert(disk -> totalBlocks, disk -> totalBlocks + 1, 1);
+          }
 
           while(blocksLeft > 0){
             if(blocksLeft > disk -> getBlocksLeft()){
@@ -169,9 +177,17 @@ class LFile
 
         void print(){
           int i = 0;
-          for(FNode * trav = start; trav != NULL; trav = trav -> next){
+          FNode * trav;
+          if(start == NULL)
+            return;
+          for(trav = start; trav != NULL; trav = trav -> next){
+            if(trav -> blockAddress >= 2147483647){
+              cout << "could not print pointer for disk : " << i << ", number to big" << endl;
+              i++;
+            } else {
             cout << "Disk: " << i << "\tpointer: " << trav -> blockAddress << endl;
             i++;
+          }
           }
         }
 

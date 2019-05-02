@@ -3,7 +3,7 @@
 #include <cstdio>
 
 struct FNode{
-    int blockAddress;
+    long int blockAddress;
     FNode* next;
     FNode * prev;
     LDisk * disk;

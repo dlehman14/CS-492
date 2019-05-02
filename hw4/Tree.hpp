@@ -24,7 +24,7 @@ class Tree{
           time_t tempTime = time(NULL);
           tim = (int)(time(&tempTime));
           root = new GNode("/",tim,16,NULL);
-          disk = new LDisk(b);
+          disk = new LDisk(ds/bs);
           currentDir = root;
         }
 
@@ -102,6 +102,7 @@ class Tree{
           updateTime();
           //create the file
           LFile * tempFile = new LFile(0,blockSize,disk);
+          usleep(1);
           GNode * tempNode = new GNode(name, tim, 0, currentDir);
           tempNode -> file = tempFile;
           //push it back
