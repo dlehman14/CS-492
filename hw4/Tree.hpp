@@ -70,20 +70,8 @@ class Tree{
         void ls(){
           for(const auto& GNode : currentDir->children)
           {
-            std::cout << GNode->name << std::endl;
+            cout << GNode->name << endl;
           }
-          /*
-          for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
-            (*it) -> printName();
-            usleep(1);
-          }
-          cout << endl;
-          /*
-          for(auto v: (currentDir -> children)){
-            cout << v -> name;
-            cout << ' ';
-          }
-          */
         }
 
 
@@ -164,11 +152,19 @@ class Tree{
           disk -> print();
         }
         void printFiles(){
+          for(const auto& GNode : currentDir->children)
+          {
+            if(GNode -> file != NULL){
+              GNode -> file -> print();
+            }
+          }
+          /*
           for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
             if((*it) -> file != NULL){
               (*it) -> file -> print();
             }
           }
+          */
         }
 
         // CLEANUP
@@ -189,9 +185,15 @@ class Tree{
         int diskSize;
         void pFile(GNode * dir){
           cout << dir -> name << '\t';
+          for(const auto& GNode : currentDir->children)
+          {
+            pFile(GNode);
+          }
+          /*
           for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
             pFile(*it);
           }
+          */
         }
         int lookUp(string name){
           bool flag = true;
@@ -221,15 +223,18 @@ class Tree{
           currentDir -> children.remove(f);
         }
         int tim;
+        //Deconstructor
         void deleteFullDir(GNode * dir){
-          for(list<GNode*>::iterator it = currentDir -> children.begin(); it != currentDir -> children.end(); ++it){
-            if((*it) -> file != NULL){
-              delete *it;
-            } else {
-              if((*it) -> children.empty()){
-                delete *it;
-              } else {
-                deleteFullDir(*it);
+          for(const auto& GNode : currentDir->children)
+          {
+            if(GNode -> file != NULL)
+              delete GNode;
+            else {
+              if(GNode -> children.empty())
+                delete GNode;
+              else {
+                deleteFullDir(GNode);
+                delete GNode;
               }
             }
           }

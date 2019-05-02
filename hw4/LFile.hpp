@@ -184,7 +184,6 @@ class LFile
           while(trav != NULL){
             FNode * temp = trav;
             trav = trav -> prev;
-            temp -> disk -> deleteDisk();
             delete temp;
           }
         }

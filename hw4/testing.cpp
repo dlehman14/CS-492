@@ -2,6 +2,7 @@
 #include "LDisk.hpp"
 #include "LFile.hpp"
 #include "Tree.hpp"
+#include "GNode.hpp"
 #include <time.h>
 using namespace std;
 
@@ -22,33 +23,39 @@ int main() {
   testDisk.print();
 */
 
-
+/*
   LDisk * testDisk = new LDisk(16);
   LFile * testFile = new LFile(2048, 32, testDisk);
+  GNode * testNode = new GNode("test",512,32,NULL);
   testFile -> print();
   cout << endl;
   testFile -> append(2048);
   testFile -> print();
   testFile -> remove(2048);
   testFile -> print();
-
+*/
 int numBlocks=32;
 int blockSize=16;
-Tree test = Tree(blockSize,numBlocks,512);
-test.addNode(16, "testNode");
-test.create("testyboi");
-test.mkdir("testDir");
+Tree * test = new Tree(blockSize,numBlocks,512);
+
+test -> addNode(16, "testNode");
+
+test -> create("testyboi");
+
+test -> mkdir("testDir");
 cout <<"testing ls: expected: testyboi testDir" << endl;
-test.ls();
+test -> ls();
+
 //test.cd("testDir");
 cout << "moved into new dir ls should print nothing"<<endl;
-test.ls();
-test.mkdir("test2");
+test -> ls();
+test -> mkdir("test2");
 cout << "ls should print: test2" << endl;
-test.ls();
-test.cdOut();
+test -> ls();
+test -> cdOut();
 cout <<"ls should print testyboi testDir" << endl;
-test.ls();
+test -> ls();
+delete test;
 cout << "testing if deletion of a nonempty dir is allowed" << endl;
 //test.deleteNode(testDir);
 /*
@@ -63,8 +70,6 @@ test.append("testyboi",16);
 test.printFiles();
 cout << "testing the remove function. testyboi should have 2 bytes now." << endl;
 test.remove("testyboi",30);
-
-
 */
 
 
