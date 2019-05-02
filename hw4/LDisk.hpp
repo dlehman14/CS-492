@@ -1,3 +1,6 @@
+
+
+//David Lehman and Thomas Kautzmann
 #ifndef _LDisk_HPP_
 #define _LDisk_HPP_
 
@@ -15,7 +18,7 @@ class LDisk{
           head = NULL;
           totalBlocks = 0;
         }
-
+        // inserts a file into the disk
         int insert(int s, int e, int u) { // working
           if(e < s){
             cout << "invalid input parameters for insert" << endl;
@@ -45,19 +48,19 @@ class LDisk{
           }
         }
 
-
+        //returns the blocks remaining
         int getBlocksLeft(){
           return maxBlocks - totalBlocks;
         }
 
-
+        //checks if the disk is full
         bool isFull(){
           if(totalBlocks >= maxBlocks)
             return true;
           return false;
         }
 
-
+        //removes something from the disk
         void remove(int blockAddress){
           if(blockAddress > tail -> end || blockAddress < 0){
             cout << "could not delete disk, out of bounds" << endl;
@@ -115,7 +118,7 @@ class LDisk{
           totalNodes = 0;
           return;
         }
-
+        //updates the disk
         void update() { //working
           if(head == NULL)
             return;
@@ -136,6 +139,7 @@ class LDisk{
           totalBlocks = max;
           return;
         }
+        //prints the disk
         void print(){ // Working
           DNode * trav;
           for(trav = head; trav != NULL; trav = trav -> next){
@@ -146,6 +150,7 @@ class LDisk{
         int maxBlocks;
         int postUpdateEnd;
         int totalNodes;
+        //deconstructor
         ~LDisk(){
           DNode * t1 = head;
           DNode * t2 = head;

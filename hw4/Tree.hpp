@@ -1,3 +1,6 @@
+
+
+//David Lehman and Thomas Kautzmann
 #ifndef _Tree_HPP_
 #define _Tree_HPP_
 
@@ -36,7 +39,16 @@ class Tree{
           currentDir -> children.push_back(newNode);
           */
             if(size<0){
-                mkdir(name);
+                int pos=0;
+                pos=name.find("/");
+                if(pos>0){
+                    cd(name.substr(0,pos));
+                    addNode(-1,name.substr(pos+1));
+                    cdOut();
+                }
+                else{
+                    mkdir(name);
+                }
             }
             else{
                 create(name);
@@ -48,7 +60,14 @@ class Tree{
         // METHODS FOR THE SHELL
 
         void cd(string name){
+          int pos=0;
+          pos=name.find("/");
           bool flag = false;
+          string temp1;
+          if(pos>0){
+            temp1=name.substr(pos+1);
+            name=name.substr(0,pos);
+          }
           GNode * temp = currentDir;
           for(const auto& GNode : currentDir->children)
           {
@@ -65,10 +84,14 @@ class Tree{
             cout << "cannot change directory, couldn't find directory" << endl;
             return;
           }
-          if(temp->file==NULL)
+          if(temp->file==NULL){
             currentDir = temp;
+          }
           else
             cout << "cannot change directory to a file"<<endl;
+          if (pos>0){
+            cd(temp1);
+          }
           return;
           /*
           if(*it == NULL){
@@ -84,7 +107,7 @@ class Tree{
 
         }
 
-
+        //cd.. function
         void cdOut() {
           if(currentDir -> parent != NULL){
             currentDir = currentDir -> parent;
@@ -93,7 +116,7 @@ class Tree{
           }
         }
 
-
+        //ls function prints all children
         void ls(){
           for(const auto& GNode : currentDir->children)
           {
@@ -102,7 +125,7 @@ class Tree{
           cout << endl;
         }
 
-
+        /// creates a new directory
         void mkdir(string name){
             if(!name.empty()){
           updateTime();
@@ -123,7 +146,7 @@ class Tree{
           currentDir -> children.push_back(tempNode);
         }
 
-
+        //adds bytes to a file
         void append(string name, int bytes){
           updateTime();
           bool flag = false;
@@ -163,7 +186,7 @@ class Tree{
           */
         }
 
-
+        //removes bytes from a file
         void remove(string name,int bytes){
           updateTime();
           bool flag = false;
@@ -202,7 +225,7 @@ class Tree{
           */
         }
 
-
+        // deletes a file or directory
         void deleteNode(string name){
           int pos = lookUp(name);
           bool flag = false;
@@ -227,18 +250,18 @@ class Tree{
             deleteFile(temp);
           }
         }
-
+        //prints everything in the current directory in breadth first order
         void dir(){
         cout << root -> name << endl;
           pFile(currentDir);
           cout << endl;
         }
-
+        //prints disk information
         void printDisk(){
           cout << "Printing disk" << endl;
           disk -> print();
         }
-
+        //prints file information
         void printFiles(){
           cout << "Printing files for " << currentDir -> name << ": " << endl;
 
@@ -246,7 +269,7 @@ class Tree{
           {
             if(GNode -> file != NULL){
               cout << "For " << GNode -> name << endl;
-              //cout << "Total size: " << GNode -> file -> getSize() << " Bytes" << endl;
+              cout << "Total size: " << GNode -> file -> getSize() << " Bytes" << endl;
               GNode -> file -> print();
             }
           }
@@ -292,7 +315,7 @@ class Tree{
             pFile(GNod);
           }
       }
-
+      //a look up function used in deleteNode
         int lookUp(string name){
           bool flag = true;
           list<GNode*>::iterator it = currentDir -> children.begin();
@@ -305,10 +328,12 @@ class Tree{
             return -1;
           return distance(currentDir -> children.begin(), it);
         }
+        //updates the time for timestamps
         void updateTime(){
           time_t tempTime = time(NULL);
           tim = (int)(time(&tempTime));
         }
+        //helps with deleting files and the deconstructor
         void deleteHelper(GNode * tmp){
           if(tmp -> children.empty()){
             currentDir -> children.remove(tmp);
@@ -317,6 +342,7 @@ class Tree{
             cout << "could not delete directory because it is not empty" << endl;
           }
         }
+        //deletes files
         void deleteFile(GNode * f){
           currentDir -> children.remove(f);
         }

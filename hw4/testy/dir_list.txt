@@ -1,0 +1,3 @@
+./
+./anotherTest
+./testing

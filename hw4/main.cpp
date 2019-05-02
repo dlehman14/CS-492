@@ -1,3 +1,6 @@
+
+
+//David Lehman and Thomas Kautzmann
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>

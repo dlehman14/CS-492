@@ -1,3 +1,6 @@
+
+
+//David Lehman and Thomas Kautzmann
 #ifndef _DNODE_HPP_
 #define _DNODE_HPP_
 

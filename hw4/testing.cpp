@@ -1,3 +1,6 @@
+
+
+//David Lehman and Thomas Kautzmann
 #include <iostream>
 #include "LDisk.hpp"
 #include "LFile.hpp"

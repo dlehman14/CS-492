@@ -1,3 +1,6 @@
+
+
+//David Lehman and Thomas Kautzmann
 #ifndef _LFILE_HPP_
 #define _LFILE_HPP_
 
@@ -11,6 +14,7 @@ using namespace std;
 class LFile
 {
     public:
+      //constructs a file
         LFile(int ts, int bs,LDisk * d) : totalSize(ts), blockSize(bs), disk(d) { // working
           disk = d;
           diskSize = disk -> maxBlocks;
@@ -77,7 +81,7 @@ class LFile
           }
         }
 
-
+        //appends bytes to a file
         void append(int numBytes){ // working
           disk -> update();
           totalSize = totalSize + numBytes;
@@ -127,7 +131,7 @@ class LFile
           }
         }
 
-
+        //removes bytes from a file
         void remove(int numBytes){ //testing
           //Setup the disk and check if we need to delete the file
           disk -> update();
@@ -174,7 +178,7 @@ class LFile
           }
         }
 
-
+        //printes a file
         void print(){
           int i = 0;
           FNode * trav;
@@ -190,11 +194,11 @@ class LFile
           }
           }
         }
-
+        //retruns the size of a file
         int getSize(){
           return totalSize;
         }
-
+        //Deconstructor
         ~LFile(){
           FNode * trav = start;
           while(trav != NULL){

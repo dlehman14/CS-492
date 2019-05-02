@@ -1,3 +1,6 @@
+
+
+//David Lehman and Thomas Kautzmann
 #ifndef _FNode_HPP_
 #define _FNode_HPP_
 #include <cstdio>

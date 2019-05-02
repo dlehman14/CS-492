@@ -1,3 +1,6 @@
+
+
+//David Lehman and Thomas Kautzmann
 #ifndef _GNode_HPP_
 #define _GNode_HPP_
 
