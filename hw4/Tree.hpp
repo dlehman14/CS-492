@@ -39,13 +39,33 @@ class Tree{
         // METHODS FOR THE SHELL
 
         void cd(string name){
-          bool flag = true;
-          list<GNode*>::iterator it = currentDir -> children.begin();
-          while(it != currentDir -> children.end() && flag == true){
-            if((*it) -> name == name)
-              flag = false;
-            it++;
+          bool flag = false;
+          //list<GNode*>::iterator it = currentDir -> children.begin();
+          for(const auto& GNode : currentDir->children)
+          {
+            if(GNode->name.compare(name)==0)
+            {
+                flag=true;
+                if(GNode->file!=NULL){
+                    cout << "cannot change directory to a file" << endl;
+                    return;
+                }
+                else{
+                    temp== currentDir;
+                    currentDir = GNode;
+                    GNode->parent= temp;
+                }
+
+
+            }
           }
+
+          if(flag == false){
+            cout << "cannot change directory, couldn't find directory" << endl;
+            return;
+          }
+          return;
+          /*
           if(*it == NULL){
             cout << "cannot change directory, couldn't find directory" << endl;
             return;
@@ -55,6 +75,8 @@ class Tree{
           } else {
             cout << "cannot change directory to a file" << endl;
           }
+          */
+
         }
 
 
@@ -178,6 +200,7 @@ class Tree{
     private:
         GNode * root;
         LDisk * disk;
+        GNode * temp;
         // USE currentDir as a handle
         GNode * currentDir;
         int numBlocks;
