@@ -8,10 +8,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <list>
-
-#include "GNode.hpp"
-#include "Tree.hpp"
 #include "LDisk.hpp"
+#include "LFile.hpp"
+#include "Tree.hpp"
+#include "GNode.hpp"
 using namespace std;
 
 
@@ -74,11 +74,12 @@ int main(int argc, char* argv[]){
     int numBlocks= diskSize/blockSize;
 
     //CREATE THE DIRECTORY
-    Tree directory= Tree(blockSize,numBlocks);
+    Tree directory= Tree(blockSize,numBlocks, diskSize);
 
     //READ THE DIRECTORIES
     while(getline(directoryStream, line)){
         //ADD EACH DIRECTORY AS A NODE
+        line.erase(0,2);
         directory.addNode(-1,line);
     }
     directoryStream.close();
@@ -108,6 +109,8 @@ int main(int argc, char* argv[]){
             ctr++;
         }
         // ADD EACH TO THE DIRECTORY
+        printf("size is:%i for %s\n",size,name  );
+        name.erase(0,2);
         directory.addNode(size,name);
     }
     fileStream.close();
